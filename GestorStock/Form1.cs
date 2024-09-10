@@ -24,7 +24,10 @@ namespace GestorStock
 
             List<Categoria> list = categoryBussiness.getAll();
 
-            this.categoriesList.DataSource = list.Select((i) => i.Descripcion).ToList();
+            Categoria cat = categoryBussiness.getOne("1");
+
+            //this.categoriesList.DataSource = list.Select((i) => i.Descripcion).ToList();
+            this.categoriesList.DataSource = new List<string> { cat.Descripcion };
         }
     }
 }

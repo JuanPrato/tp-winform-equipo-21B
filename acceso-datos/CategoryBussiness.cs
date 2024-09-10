@@ -5,7 +5,7 @@ namespace acceso_datos
 {
     public class CategoryBussiness : Bussiness<Categoria>
     {
-        public CategoryBussiness() : base("CATEGORIAS", new List<string> { "Id", "Descripcion" } , new CategoryMapper())
+        public CategoryBussiness() : base("CATEGORIAS", "Id", new List<string> { "Descripcion" } , new CategoryMapper())
         {
 
         }

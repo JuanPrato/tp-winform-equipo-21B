@@ -10,13 +10,15 @@ namespace acceso_datos
     public abstract class Bussiness<T>
     {
         private string tableName;
+        private string idColumn;
         private List<string> rows;
         private SqlConnection sqlConexion = new SqlConnection();
         private SqlDataReader reader;
         private IDBMapper<T> mapper;
 
-        public Bussiness(string tableName, List<string> rows, IDBMapper<T> mapper)
+        public Bussiness(string tableName, string idColumn, List<string> rows, IDBMapper<T> mapper)
         {
+            this.idColumn = idColumn;
             this.rows = rows;
             this.mapper = mapper;
             this.tableName = tableName;
@@ -28,7 +30,6 @@ namespace acceso_datos
                 IntegratedSecurity = true
             };
 
-            //sqlConexion.ConnectionString = "server=.\\SQLEXPRESS; database=CATALOGO_P3_DB; integrated security=true";
             sqlConexion.ConnectionString = sConnB.ConnectionString;
         }
 
@@ -39,15 +40,12 @@ namespace acceso_datos
 
         public List<T> getAll()
         {
-            SqlCommand command = new SqlCommand();
-
-            command.CommandType = System.Data.CommandType.Text;
-            command.CommandText = "SELECT " + String.Join(" ,", rows) + " FROM " + tableName;
-            command.Connection = sqlConexion;
 
             sqlConexion.Open();
 
-            reader = command.ExecuteReader();
+            string query = String.Format("SELECT {0},{1} FROM {2}", idColumn, String.Join(" ,", rows), tableName);
+
+            reader = executeCommand(query);
 
             List<T> list = new List<T>();
 
@@ -61,19 +59,67 @@ namespace acceso_datos
             return list;
         }
 
-        public T getOne(T id)
+        public T getOne(string id)
         {
-            return id;
+
+            sqlConexion.Open();
+
+            string query = String.Format("SELECT {0},{1} FROM {2} WHERE {3}={4}", idColumn, String.Join(" ,", rows), tableName, idColumn, id);
+
+            SqlDataReader reader = this.executeCommand(query);
+
+            if (!reader.Read())
+            {
+                throw new Exception();
+            }
+
+            T response = this.mapper.mapToObject(reader);
+
+            sqlConexion.Close();
+
+            return response;
+
         }
 
-        public void deleteOne(int id)
+        public void deleteOne(string id)
         {
+            sqlConexion.Open();
 
+            string query = String.Format("DELETE FROM {0} WHERE {2}={3}", tableName, idColumn, id);
+            SqlDataReader reader = this.executeCommand(query);
+
+            if (!reader.Read())
+            {
+                throw new Exception();
+            }
+            sqlConexion.Close();
         }
 
         public bool saveOne(T item)
         {
+            sqlConexion.Open();
+
+            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tableName, String.Join(" ,", rows), this.mapper.mapFromObject(item));
+            SqlDataReader reader = this.executeCommand(query);
+
+            if (!reader.Read())
+            {
+                throw new Exception();
+            }
+            sqlConexion.Close();
+
             return true;
+        }
+
+        private SqlDataReader executeCommand(string sqlCommand)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.CommandType = System.Data.CommandType.Text;
+            command.Connection = sqlConexion;
+            command.CommandText = sqlCommand;
+
+            return command.ExecuteReader();
         }
     }
 }
