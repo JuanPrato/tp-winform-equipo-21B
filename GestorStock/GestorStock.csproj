@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>GestorStock</RootNamespace>
     <AssemblyName>GestorStock</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,6 +66,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -78,6 +80,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\acceso-datos\acceso_datos.csproj">
+      <Project>{1700c432-a93b-4880-89a7-dff09b5801de}</Project>
+      <Name>acceso_datos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\dominio\dominio.csproj">
+      <Project>{a43eab6c-8087-44d8-97b6-f63af03e3434}</Project>
+      <Name>dominio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\negocio\negocio.csproj">
+      <Project>{5b265acb-dfc9-4aec-81e3-f2f1067870c9}</Project>
+      <Name>negocio</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
