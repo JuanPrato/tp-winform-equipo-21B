@@ -23,8 +23,10 @@ namespace acceso_datos
             art.Codigo = reader.GetString(1);
             art.Nombre = reader.GetString(2);
             art.Descripcion = reader.GetString(3);
-            art.IdMarca = reader.GetInt32(4);
-            art.IdCategoria = reader.GetInt32(5);
+            art.Marca = new Marca();
+            art.Marca.Id = reader.GetInt32(4);
+            art.Categoria = new Categoria();
+            art.Categoria.Id = reader.GetInt32(5);
             art.Precio = reader.GetDecimal(6);
             art.Urls = (from IDataRecord r in reader select (string)r["Urls"]).ToList();
 
