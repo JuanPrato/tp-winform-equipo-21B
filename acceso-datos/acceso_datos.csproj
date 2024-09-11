@@ -41,10 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrandBussiness.cs" />
+    <Compile Include="BrandMapper.cs" />
     <Compile Include="Bussiness.cs" />
     <Compile Include="CategoryBussiness.cs" />
     <Compile Include="CategoryMapper.cs" />
     <Compile Include="IDBMapper.cs" />
+    <Compile Include="ImageBussiness.cs" />
+    <Compile Include="ImageMapper.cs" />
+    <Compile Include="ItemBussiness.cs" />
+    <Compile Include="ItemMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
