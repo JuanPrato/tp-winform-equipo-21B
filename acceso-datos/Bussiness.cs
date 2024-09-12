@@ -25,7 +25,7 @@ namespace acceso_datos
 
             SqlConnectionStringBuilder sConnB = new SqlConnectionStringBuilder()
             {
-                DataSource = "localhost",
+                DataSource = ".\\SQLEXPRESS",
                 InitialCatalog = "CATALOGO_P3_DB",
                 IntegratedSecurity = true
             };
