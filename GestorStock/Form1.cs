@@ -18,16 +18,29 @@ namespace GestorStock
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void Form1_Load(object sender, EventArgs e)
         {
-            CategoryBussiness categoryBussiness = new CategoryBussiness();
+            ItemBussiness itemBussiness = new ItemBussiness();
 
-            List<Categoria> list = categoryBussiness.getAll();
+            List<Articulo> articulos = itemBussiness.getAll();
 
-            Categoria cat = categoryBussiness.getOne("1");
+            this.dgvArticles.DataSource = articulos;
 
-            //this.categoriesList.DataSource = list.Select((i) => i.Descripcion).ToList();
-            this.categoriesList.DataSource = new List<string> { cat.Descripcion };
+            this.dgvArticles.ClearSelection();
+
+            this.btnDelete.Enabled = false;
+            this.btnModify.Enabled = false;
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            ItemBussiness itemBussiness = new ItemBussiness();
+
+            List<Articulo> articulos = itemBussiness.getAllFilterByName(this.tbSearch.Text.Trim());
+
+            this.dgvArticles.DataSource = articulos;
         }
     }
 }

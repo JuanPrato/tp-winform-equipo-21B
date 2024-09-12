@@ -20,15 +20,18 @@ namespace acceso_datos
         {
             Articulo art = new Articulo();
 
+            art.Id = reader.GetInt32(0);
             art.Codigo = reader.GetString(1);
             art.Nombre = reader.GetString(2);
             art.Descripcion = reader.GetString(3);
             art.Marca = new Marca();
-            art.Marca.Descripcion = reader.GetString(4);
+            art.Marca.Id = reader.GetInt32(4);
+            //art.Marca.Descripcion = reader.GetString(4);
             art.Categoria = new Categoria();
-            art.Categoria.Descripcion = reader.GetString(5);
+            art.Categoria.Id= reader.GetInt32(5);
+            //art.Categoria.Descripcion = reader.GetString(5);
             art.Precio = reader.GetDecimal(6);
-            art.Urls = (from IDataRecord r in reader select (string)r["Urls"]).ToList();
+            //art.Urls = (from IDataRecord r in reader select (string)r["Urls"]).ToList();
 
             return art;
         }

@@ -11,7 +11,7 @@ namespace acceso_datos
     {
         private string tableName;
         private string idColumn;
-        private List<string> rows;
+        private List<string> columns;
         private SqlConnection sqlConexion = new SqlConnection();
         private SqlDataReader reader;
         private IDBMapper<T> mapper;
@@ -19,7 +19,7 @@ namespace acceso_datos
         public Bussiness(string tableName, string idColumn, List<string> rows, IDBMapper<T> mapper)
         {
             this.idColumn = idColumn;
-            this.rows = rows;
+            this.columns = rows;
             this.mapper = mapper;
             this.tableName = tableName;
 
@@ -33,9 +33,24 @@ namespace acceso_datos
             sqlConexion.ConnectionString = sConnB.ConnectionString;
         }
 
-        protected List<T> getByConditions()
+        protected List<T> getAllFilterByTextContain(int columnIndex, string text)
         {
-            return new List<T>();
+            sqlConexion.Open();
+
+            string query = String.Format("SELECT {0},{1} FROM {2} WHERE {3} LIKE '%{4}%'", idColumn, String.Join(" ,", columns), tableName, columns[columnIndex], text);
+
+            reader = executeCommand(query);
+
+            List<T> list = new List<T>();
+
+            while (reader.Read())
+            {
+                list.Add(this.mapper.mapToObject(reader));
+            }
+
+            sqlConexion.Close();
+
+            return list;
         }
 
         public List<T> getAll()
@@ -43,7 +58,7 @@ namespace acceso_datos
 
             sqlConexion.Open();
 
-            string query = String.Format("SELECT {0},{1} FROM {2}", idColumn, String.Join(" ,", rows), tableName);
+            string query = String.Format("SELECT {0},{1} FROM {2}", idColumn, String.Join(" ,", columns), tableName);
 
             reader = executeCommand(query);
 
@@ -64,7 +79,7 @@ namespace acceso_datos
 
             sqlConexion.Open();
 
-            string query = String.Format("SELECT {0},{1} FROM {2} WHERE {3}={4}", idColumn, String.Join(" ,", rows), tableName, idColumn, id);
+            string query = String.Format("SELECT {0},{1} FROM {2} WHERE {3}={4}", idColumn, String.Join(" ,", columns), tableName, idColumn, id);
 
             SqlDataReader reader = this.executeCommand(query);
 
@@ -99,7 +114,7 @@ namespace acceso_datos
         {
             sqlConexion.Open();
 
-            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tableName, String.Join(" ,", rows), this.mapper.mapFromObject(item));
+            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tableName, String.Join(" ,", columns), this.mapper.mapFromObject(item));
             SqlDataReader reader = this.executeCommand(query);
 
             if (!reader.Read())

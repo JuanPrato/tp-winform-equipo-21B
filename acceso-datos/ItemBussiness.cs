@@ -6,8 +6,16 @@ namespace acceso_datos
 {
     public class ItemBussiness : Bussiness<Articulo>
     {
-        public ItemBussiness() : base("ARTICULOS", "Codigo", new List<string> { "Descripcion" }, new ItemMapper())
+
+        private static List<string> rows = new List<string> { "Codigo", "Nombre", "Descripcion", "IdMarca", "IdCategoria", "Precio" };
+
+        public ItemBussiness() : base("ARTICULOS", "Id", rows, new ItemMapper())
         {
+        }
+
+        public List<Articulo> getAllFilterByName(string query)
+        {
+            return this.getAllFilterByTextContain(1, query);
         }
     }
 }
