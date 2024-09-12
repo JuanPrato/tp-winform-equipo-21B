@@ -24,6 +24,7 @@ namespace GestorStock
             ItemBussiness itemBussiness = new ItemBussiness();
 
             List<Articulo> articulos = itemBussiness.getAll();
+            
 
             this.dgvArticles.DataSource = articulos;
 
@@ -41,6 +42,12 @@ namespace GestorStock
             List<Articulo> articulos = itemBussiness.getAllFilterByName(this.tbSearch.Text.Trim());
 
             this.dgvArticles.DataSource = articulos;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            frmAgregarArticulos ventana = new frmAgregarArticulos();
+            ventana.ShowDialog();
         }
     }
 }
