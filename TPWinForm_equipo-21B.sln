@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestorStock", "GestorStock\GestorStock.csproj", "{412984F1-792F-477B-ADB8-414E9C2376C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPWinForm_equipo-21B", "TPWinForm_equipo-21B\TPWinForm_equipo-21B.csproj", "{412984F1-792F-477B-ADB8-414E9C2376C9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{1700C432-A93B-4880-89A7-DFF09B5801DE} = {1700C432-A93B-4880-89A7-DFF09B5801DE}
 		{5B265ACB-DFC9-4AEC-81E3-F2F1067870C9} = {5B265ACB-DFC9-4AEC-81E3-F2F1067870C9}
