@@ -14,6 +14,9 @@ namespace GestorStock
 {
     public partial class frmAgregarArticulos : Form
     {
+
+        private List<Imagen> images = new List<Imagen>();
+
         public frmAgregarArticulos()
         {
             InitializeComponent();
@@ -116,6 +119,27 @@ namespace GestorStock
         {
             frmBrandsAdd modalAddBrand = new frmBrandsAdd();
             modalAddBrand.ShowDialog();
+        }
+
+        private void btnAddImages_Click(object sender, EventArgs e)
+        {
+            frmImageLoader imageLoader = new frmImageLoader(this.tbNombre.Text, this.images);
+
+            if (imageLoader.ShowDialog() != DialogResult.OK) {
+                return;
+            }
+
+            this.images = imageLoader.Urls;
+
+            this.lvUrls.Items.Clear();
+
+            this.lvUrls.Items.AddRange(this.images.Select(image =>
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = image.Url;
+
+                return item;
+            }).ToArray());
         }
     }
 }

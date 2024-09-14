@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
+using System.Configuration;
 
 namespace GestorStock
 {
@@ -21,6 +23,12 @@ namespace GestorStock
 
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
+            // Check if images folder exists
+            if (!File.Exists(ConfigurationManager.AppSettings["images-folder"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["images-folder-name"]);
+            }
+
             ItemBussiness itemBussiness = new ItemBussiness();
 
             List<Articulo> articulos = itemBussiness.getAll();
