@@ -111,5 +111,11 @@ namespace GestorStock
 
             modalAddCategory.ShowDialog();
         }
+
+        private void btnAgregarMar_Click(object sender, EventArgs e)
+        {
+            frmBrandsAdd modalAddBrand = new frmBrandsAdd();
+            modalAddBrand.ShowDialog();
+        }
     }
 }

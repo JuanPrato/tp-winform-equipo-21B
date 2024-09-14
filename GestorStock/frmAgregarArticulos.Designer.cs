@@ -219,6 +219,7 @@
             this.btnAgregarMar.TabIndex = 21;
             this.btnAgregarMar.Text = "Agregar marca";
             this.btnAgregarMar.UseVisualStyleBackColor = true;
+            this.btnAgregarMar.Click += new System.EventHandler(this.btnAgregarMar_Click);
             // 
             // btnAgregarCat
             // 

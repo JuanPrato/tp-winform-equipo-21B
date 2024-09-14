@@ -89,5 +89,17 @@ namespace GestorStock
                 MessageBox.Show("Debe seleccionar un artículo");
             }
         }
+
+        private void agregarToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            frmBrandsAdd modalAddBrand = new frmBrandsAdd();
+            modalAddBrand.ShowDialog();
+        }
+
+        private void modificarOEliminarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBrandsEdit modalEditBrand = new frmBrandsEdit();
+            modalEditBrand.ShowDialog();
+        }
     }
 }
