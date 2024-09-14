@@ -101,5 +101,11 @@ namespace GestorStock
             frmBrandsEdit modalEditBrand = new frmBrandsEdit();
             modalEditBrand.ShowDialog();
         }
+
+        private void dgvArticles_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            this.btnDelete.Enabled = true;
+            this.btnModify.Enabled = true;
+        }
     }
 }
