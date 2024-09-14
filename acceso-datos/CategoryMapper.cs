@@ -10,9 +10,16 @@ namespace acceso_datos
 {
     public class CategoryMapper : IDBMapper<Categoria>
     {
-        public string mapFromObject(Categoria obj)
+        public string getIdentifier(Categoria obj)
         {
-            return obj.ToString();
+            return obj.Id.ToString();
+        }
+
+        public List<string> mapFromObject(Categoria obj)
+        {
+            List<string> args = new List<string>();
+            args.Add($"'{obj.Descripcion}'");
+            return args;
         }
 
         public Categoria mapToObject(SqlDataReader reader)

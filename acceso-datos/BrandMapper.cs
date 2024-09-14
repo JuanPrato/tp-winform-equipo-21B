@@ -10,9 +10,15 @@ namespace acceso_datos
 {
     public class BrandMapper : IDBMapper<Marca>
     {
-        public string mapFromObject(Marca obj)
+        public string getIdentifier(Marca obj)
         {
-            return obj.ToString();
+            return obj.Id.ToString();
+        }
+
+        public List<string> mapFromObject(Marca obj)
+        {
+            return new List<string>();
+            //return obj.ToString();
         }
 
         public Marca mapToObject(SqlDataReader reader)

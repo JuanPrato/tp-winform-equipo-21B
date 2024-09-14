@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace acceso_datos
     public abstract class Bussiness<T>
     {
         private string tableName;
-        private string idColumn;
+        protected string idColumn;
         private List<string> columns;
         private SqlConnection sqlConexion = new SqlConnection();
         private SqlDataReader reader;
@@ -26,6 +27,7 @@ namespace acceso_datos
             SqlConnectionStringBuilder sConnB = new SqlConnectionStringBuilder()
             {
                 DataSource = ".\\SQLEXPRESS",
+                //DataSource = "localhost",
                 InitialCatalog = "CATALOGO_P3_DB",
                 IntegratedSecurity = true
             };
@@ -33,11 +35,11 @@ namespace acceso_datos
             sqlConexion.ConnectionString = sConnB.ConnectionString;
         }
 
-        protected List<T> getAllFilterByTextContain(int columnIndex, string text)
+        protected List<T> select(string selectedValues, string condition="")
         {
             sqlConexion.Open();
 
-            string query = String.Format("SELECT {0},{1} FROM {2} WHERE {3} LIKE '%{4}%'", idColumn, String.Join(" ,", columns), tableName, columns[columnIndex], text);
+            string query = String.Format("SELECT {0} FROM {1} t {2}", selectedValues, tableName, condition);
 
             reader = executeCommand(query);
 
@@ -53,77 +55,93 @@ namespace acceso_datos
             return list;
         }
 
-        public List<T> getAll()
+        protected void update(string sets, string condition="")
         {
-
             sqlConexion.Open();
 
-            string query = String.Format("SELECT {0},{1} FROM {2}", idColumn, String.Join(" ,", columns), tableName);
-
-            reader = executeCommand(query);
-
-            List<T> list = new List<T>();
-
-            while (reader.Read())
-            {
-                list.Add(this.mapper.mapToObject(reader));
-            }
+            string query = String.Format("UPDATE {0} SET {1} {2}", tableName, sets, condition);
+            this.executeCommand(query);
 
             sqlConexion.Close();
-
-            return list;
         }
 
-        public T getOne(string id)
+        protected void delete(string condition)
         {
-
             sqlConexion.Open();
 
-            string query = String.Format("SELECT {0},{1} FROM {2} WHERE {3}={4}", idColumn, String.Join(" ,", columns), tableName, idColumn, id);
-
+            string query = String.Format("DELETE FROM {0} {1}", tableName, condition);
             SqlDataReader reader = this.executeCommand(query);
 
             if (!reader.Read())
             {
                 throw new Exception();
             }
+            sqlConexion.Close();
+        }
 
-            T response = this.mapper.mapToObject(reader);
+        protected void insert(string values)
+        {
+            sqlConexion.Open();
+
+            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tableName, String.Join(" ,", columns), values);
+            this.executeCommand(query);
 
             sqlConexion.Close();
 
-            return response;
+        }
 
+        protected List<T> getAllFilterByTextContain(int columnIndex, string text)
+        {
+            return select($"{idColumn}, {String.Join(" ,", columns)}", $"WHERE {columns[columnIndex]} LIKE '%{text}%'");
+        }
+
+        virtual public List<T> getAll()
+        {
+
+            return select($"{idColumn}, {String.Join(" ,", columns)}");
+        }
+
+        public T getOne(T obj)
+        {
+            List<T> res = select($"{idColumn}, {String.Join(" ,", columns)}", $"WHERE {idColumn}={this.mapper.getIdentifier(obj)}");
+
+            if (res.Count == 0)
+            {
+                return obj;
+            }
+
+            return res[0];
         }
 
         public void deleteOne(string id)
         {
-            sqlConexion.Open();
-
-            string query = String.Format("DELETE FROM {0} WHERE {2}={3}", tableName, idColumn, id);
-            SqlDataReader reader = this.executeCommand(query);
-
-            if (!reader.Read())
-            {
-                throw new Exception();
-            }
-            sqlConexion.Close();
+            delete($"WHERE {idColumn}={id}");
         }
 
         public bool saveOne(T item)
         {
-            sqlConexion.Open();
+            List<string> values = this.mapper.mapFromObject(item);
 
-            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tableName, String.Join(" ,", columns), this.mapper.mapFromObject(item));
-            SqlDataReader reader = this.executeCommand(query);
-
-            if (!reader.Read())
-            {
-                throw new Exception();
-            }
-            sqlConexion.Close();
+            insert(String.Join(" ,", values));
 
             return true;
+        }
+
+        public void updateOne(T item)
+        {
+            List<string> values = this.mapper.mapFromObject(item);
+
+            List<string> sets = new List<string>();
+
+            for (int i = 0; i < columns.Count; i++)
+            {
+                string column = columns[i];
+                string value = values[i];
+
+                sets.Add($"{column}={value}");
+            }
+
+            update(String.Join(" ,", sets), $"WHERE {idColumn}={this.mapper.getIdentifier(item)}");
         }
 
         private SqlDataReader executeCommand(string sqlCommand)

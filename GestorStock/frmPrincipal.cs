@@ -8,18 +8,18 @@ using System.Windows.Forms;
 
 namespace GestorStock
 {
-    public partial class Form1 : Form
+    public partial class frmPrincipal : Form
     {
 
         SqlConnection sQLConnection = null;
 
-        public Form1()
+        public frmPrincipal()
         {
             InitializeComponent();
         }
 
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void frmPrincipal_Load(object sender, EventArgs e)
         {
             ItemBussiness itemBussiness = new ItemBussiness();
 
@@ -48,6 +48,24 @@ namespace GestorStock
         {
             frmAgregarArticulos ventana = new frmAgregarArticulos();
             ventana.ShowDialog();
+        }
+
+        private void agregarToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmCategoriesAdd modalAddCategory = new frmCategoriesAdd();
+
+            modalAddCategory.ShowDialog();
+        }
+
+        private void modificarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmCategoriesEdit modalEditCategory = new frmCategoriesEdit();
+            
+            modalEditCategory.ShowDialog();
+
+            ItemBussiness itemBussiness = new ItemBussiness();
+
+            this.dgvArticles.DataSource = itemBussiness.getAll();
         }
     }
 }

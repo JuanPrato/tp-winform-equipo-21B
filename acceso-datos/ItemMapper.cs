@@ -11,9 +11,15 @@ namespace acceso_datos
 {
     public class ItemMapper : IDBMapper<Articulo>
     {
-        public string mapFromObject(Articulo obj)
+        public string getIdentifier(Articulo obj)
         {
-            return obj.ToString();
+            return obj.Id.ToString();
+        }
+
+        public List<string> mapFromObject(Articulo obj)
+        {
+            //return obj.ToString();
+            return new List<string>();
         }
 
         public Articulo mapToObject(SqlDataReader reader)
@@ -26,10 +32,10 @@ namespace acceso_datos
             art.Descripcion = reader.GetString(3);
             art.Marca = new Marca();
             art.Marca.Id = reader.GetInt32(4);
-            //art.Marca.Descripcion = reader.GetString(4);
+            art.Marca.Descripcion = (string)reader["MarDescription"];
             art.Categoria = new Categoria();
             art.Categoria.Id= reader.GetInt32(5);
-            //art.Categoria.Descripcion = reader.GetString(5);
+            art.Categoria.Descripcion = (string)reader["CatDescription"];
             art.Precio = reader.GetDecimal(6);
             //art.Urls = (from IDataRecord r in reader select (string)r["Urls"]).ToList();
 
