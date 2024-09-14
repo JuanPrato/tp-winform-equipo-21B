@@ -47,6 +47,8 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.cmbMarca = new System.Windows.Forms.ComboBox();
             this.cmbCategoria = new System.Windows.Forms.ComboBox();
+            this.btnAgregarMar = new System.Windows.Forms.Button();
+            this.btnAgregarCat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbImagen)).BeginInit();
             this.SuspendLayout();
             // 
@@ -209,11 +211,32 @@
             this.cmbCategoria.TabIndex = 20;
             this.cmbCategoria.SelectedIndexChanged += new System.EventHandler(this.cmbCategoria_SelectedIndexChanged);
             // 
+            // btnAgregarMar
+            // 
+            this.btnAgregarMar.Location = new System.Drawing.Point(64, 409);
+            this.btnAgregarMar.Name = "btnAgregarMar";
+            this.btnAgregarMar.Size = new System.Drawing.Size(103, 23);
+            this.btnAgregarMar.TabIndex = 21;
+            this.btnAgregarMar.Text = "Agregar marca";
+            this.btnAgregarMar.UseVisualStyleBackColor = true;
+            // 
+            // btnAgregarCat
+            // 
+            this.btnAgregarCat.Location = new System.Drawing.Point(229, 409);
+            this.btnAgregarCat.Name = "btnAgregarCat";
+            this.btnAgregarCat.Size = new System.Drawing.Size(109, 23);
+            this.btnAgregarCat.TabIndex = 22;
+            this.btnAgregarCat.Text = "Agregar categoría";
+            this.btnAgregarCat.UseVisualStyleBackColor = true;
+            this.btnAgregarCat.Click += new System.EventHandler(this.btnAgregarCat_Click);
+            // 
             // frmAgregarArticulos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(413, 517);
+            this.Controls.Add(this.btnAgregarCat);
+            this.Controls.Add(this.btnAgregarMar);
             this.Controls.Add(this.cmbCategoria);
             this.Controls.Add(this.cmbMarca);
             this.Controls.Add(this.btnCancelar);
@@ -263,5 +286,7 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.ComboBox cmbMarca;
         private System.Windows.Forms.ComboBox cmbCategoria;
+        private System.Windows.Forms.Button btnAgregarMar;
+        private System.Windows.Forms.Button btnAgregarCat;
     }
 }

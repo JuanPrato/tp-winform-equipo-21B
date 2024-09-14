@@ -72,14 +72,27 @@ namespace GestorStock
                 // Inicializamos el comboBox de categorías
                 CategoryBussiness catBussiness = new CategoryBussiness();
                 this.cmbCategoria.DataSource = catBussiness.getAll();
-                this.cmbCategoria.DisplayMember = "Descripcion";
-                this.cmbCategoria.ValueMember = "Id";
+                if(this.cmbCategoria.DataSource != null)
+                {
+                    this.cmbCategoria.DisplayMember = "Descripcion";
+                    this.cmbCategoria.ValueMember = "Id";
+                }else
+                {
+                    this.cmbCategoria.Enabled = false;
+                }
 
                 // Inicializamos el comboBox de marcas
                 BrandBussiness marBussiness = new BrandBussiness();
                 this.cmbMarca.DataSource = marBussiness.getAll();
-                this.cmbMarca.DisplayMember = "Descripcion";
-                this.cmbMarca.ValueMember = "Id";
+                if(this.cmbMarca.DataSource != null)
+                {
+                    this.cmbMarca.DisplayMember = "Descripcion";
+                    this.cmbMarca.ValueMember = "Id";
+                }
+                else
+                {
+                    this.cmbMarca.Enabled = false;
+                }
             }
             catch (Exception ex)
             {
@@ -90,6 +103,13 @@ namespace GestorStock
         private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnAgregarCat_Click(object sender, EventArgs e)
+        {
+            frmCategoriesAdd modalAddCategory = new frmCategoriesAdd();
+
+            modalAddCategory.ShowDialog();
         }
     }
 }
