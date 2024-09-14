@@ -6,7 +6,7 @@ namespace acceso_datos
 {
     public class ImageBussiness : Bussiness<Imagen>
     {
-        public ImageBussiness() : base("IMAGENES", "Id", new List<string> { "Url" }, new ImageMapper())
+        public ImageBussiness() : base("IMAGENES", "Id", new List<string> { "IdArticulo", "ImagenUrl" }, new ImageMapper())
         {
         }
     }

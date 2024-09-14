@@ -24,6 +24,27 @@ namespace acceso_datos
                 );
         }
 
+        override public int saveOne(Articulo art)
+        {
+            int id = base.saveOne(art);
+
+            if (id == -1)
+            {
+                throw new Exception("Ocurrió un error inesperado");
+            }
+
+            ImageBussiness imageBussiness = new ImageBussiness();
+
+            foreach (Imagen img in art.Urls)
+            {
+                img.IdArticulo = id;
+                imageBussiness.saveOne(img);
+            }
+
+
+            return id;
+        }
+
         public List<Articulo> getAllFilterByName(string query)
         {
             return this.getAllFilterByTextContain(1, query);

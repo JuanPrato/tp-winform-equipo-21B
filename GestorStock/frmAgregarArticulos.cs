@@ -37,16 +37,21 @@ namespace GestorStock
                     Descripcion = tbDescripcion.Text,
                     Marca = new Marca { Id = int.Parse(cmbMarca.SelectedValue.ToString()) }, // Crear instancia de Marca
                     Categoria = new Categoria { Id = int.Parse(cmbCategoria.SelectedValue.ToString()) }, // Crear instancia de Categoria
-                    Precio = decimal.Parse(tbPrecio.Text)
+                    Precio = decimal.Parse(tbPrecio.Text),
+                    Urls = this.images
                 };
 
                 // 3. Guardar el nuevo objeto en la base de datos
-                bool result = itemBusiness.saveOne(art);
+                int result = itemBusiness.saveOne(art);
 
                 // 4. Verificar si se guardó con éxito
-                if (result)
+                if (result != -1)
                 {
                     MessageBox.Show("El artículo se agregó correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+
                 }
                 else
                 {

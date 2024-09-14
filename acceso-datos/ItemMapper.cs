@@ -18,8 +18,17 @@ namespace acceso_datos
 
         public List<string> mapFromObject(Articulo obj)
         {
-            //return obj.ToString();
-            return new List<string>();
+
+            List<string> args = new List<string>();
+
+            args.Add($"'{obj.Codigo}'");
+            args.Add($"'{obj.Nombre}'");
+            args.Add($"'{obj.Descripcion}'");
+            args.Add($"{obj.Marca.Id}");
+            args.Add($"{obj.Categoria.Id}");
+            args.Add($"{obj.Precio}");
+
+            return args;
         }
 
         public Articulo mapToObject(SqlDataReader reader)

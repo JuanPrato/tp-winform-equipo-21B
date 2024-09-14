@@ -17,8 +17,12 @@ namespace acceso_datos
 
         public List<string> mapFromObject(Imagen obj)
         {
-            //return obj.ToString();
-            return new List<string>();
+            List<string> args = new List<string>();
+
+            args.Add($"{obj.IdArticulo}");
+            args.Add($"'{obj.Url}'");
+
+            return args;
         }
 
         public Imagen mapToObject(SqlDataReader reader)

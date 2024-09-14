@@ -79,15 +79,21 @@ namespace acceso_datos
             sqlConexion.Close();
         }
 
-        protected void insert(string values)
+        protected int insert(string values)
         {
+            int id = -1;
             sqlConexion.Open();
 
-            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tableName, String.Join(" ,", columns), values);
-            this.executeCommand(query);
+            string query = String.Format("INSERT INTO {0} ({1}) VALUES ({2});SELECT SCOPE_IDENTITY();", tableName, String.Join(" ,", columns), values);
+            reader = this.executeCommand(query);
+
+            if (reader.Read()) { 
+                id = Convert.ToInt32(reader[0]);
+            }
 
             sqlConexion.Close();
 
+            return id;
         }
 
         protected List<T> getAllFilterByTextContain(int columnIndex, string text)
@@ -118,13 +124,13 @@ namespace acceso_datos
             delete($"WHERE {idColumn}={id}");
         }
 
-        public bool saveOne(T item)
+        public virtual int saveOne(T item)
         {
             List<string> values = this.mapper.mapFromObject(item);
 
-            insert(String.Join(" ,", values));
+            int id = insert(String.Join(" ,", values));
 
-            return true;
+            return id;
         }
 
         public void updateOne(T item)
