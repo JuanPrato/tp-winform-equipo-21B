@@ -32,8 +32,8 @@ namespace GestorStock
                     Codigo = tbCodigo.Text,
                     Nombre = tbNombre.Text,
                     Descripcion = tbDescripcion.Text,
-                    Marca = new Marca { Id = int.Parse(tbIdMarca.Text) }, // Crear instancia de Marca
-                    Categoria = new Categoria { Id = int.Parse(tbIdCat.Text) }, // Crear instancia de Categoria
+                    Marca = new Marca { Id = int.Parse(cmbMarca.SelectedValue.ToString()) }, // Crear instancia de Marca
+                    Categoria = new Categoria { Id = int.Parse(cmbCategoria.SelectedValue.ToString()) }, // Crear instancia de Categoria
                     Precio = decimal.Parse(tbPrecio.Text)
                 };
 
@@ -63,6 +63,33 @@ namespace GestorStock
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void frmAgregarArticulos_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                // Inicializamos el comboBox de categorías
+                CategoryBussiness catBussiness = new CategoryBussiness();
+                this.cmbCategoria.DataSource = catBussiness.getAll();
+                this.cmbCategoria.DisplayMember = "Descripcion";
+                this.cmbCategoria.ValueMember = "Id";
+
+                // Inicializamos el comboBox de marcas
+                BrandBussiness marBussiness = new BrandBussiness();
+                this.cmbMarca.DataSource = marBussiness.getAll();
+                this.cmbMarca.DisplayMember = "Descripcion";
+                this.cmbMarca.ValueMember = "Id";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void cmbCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

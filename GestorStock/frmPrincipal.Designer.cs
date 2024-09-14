@@ -67,6 +67,7 @@
             // 
             // dgvArticles
             // 
+            this.dgvArticles.AccessibleName = "dgvArticles";
             this.dgvArticles.AllowUserToAddRows = false;
             this.dgvArticles.AllowUserToDeleteRows = false;
             this.dgvArticles.AllowUserToResizeColumns = false;
@@ -122,7 +123,7 @@
             // agregarToolStripMenuItem1
             // 
             this.agregarToolStripMenuItem1.Name = "agregarToolStripMenuItem1";
-            this.agregarToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.agregarToolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
             this.agregarToolStripMenuItem1.Text = "Agregar";
             this.agregarToolStripMenuItem1.Click += new System.EventHandler(this.agregarToolStripMenuItem1_Click);
             // 
@@ -160,6 +161,7 @@
             this.btnDelete.TabIndex = 7;
             this.btnDelete.Text = "Eliminar";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // frmPrincipal
             // 

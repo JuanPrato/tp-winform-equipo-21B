@@ -67,5 +67,27 @@ namespace GestorStock
 
             this.dgvArticles.DataSource = itemBussiness.getAll();
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if(this.dgvArticles.CurrentRow != null)
+            {
+                ItemBussiness itemBus = new ItemBussiness();
+                Articulo item = new Articulo();
+                item = (Articulo)this.dgvArticles.CurrentRow.DataBoundItem;
+                DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString());
+                if (res == DialogResult.OK)
+                {
+                    itemBus.deleteOne(item.Id.ToString());
+                    MessageBox.Show("Artículo " + item.Id.ToString() + " eliminado con éxito.");
+                } else
+                {
+                    return;
+                }
+            } else
+            {
+                MessageBox.Show("Debe seleccionar un artículo");
+            }
+        }
     }
 }
