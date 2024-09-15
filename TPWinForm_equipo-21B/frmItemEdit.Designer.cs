@@ -42,11 +42,9 @@
             this.lblPrecioEdit = new System.Windows.Forms.Label();
             this.btnSaveEdit = new System.Windows.Forms.Button();
             this.btnCancelEdit = new System.Windows.Forms.Button();
-            this.lstImagenesEdit = new System.Windows.Forms.ListBox();
             this.lblEditImag = new System.Windows.Forms.Label();
             this.lblLeyendaEdit = new System.Windows.Forms.Label();
             this.btnItemImagenEdit = new System.Windows.Forms.Button();
-            this.btnItemImagenAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtNomEdit
@@ -155,7 +153,7 @@
             // 
             // btnSaveEdit
             // 
-            this.btnSaveEdit.Location = new System.Drawing.Point(15, 514);
+            this.btnSaveEdit.Location = new System.Drawing.Point(15, 422);
             this.btnSaveEdit.Name = "btnSaveEdit";
             this.btnSaveEdit.Size = new System.Drawing.Size(101, 23);
             this.btnSaveEdit.TabIndex = 12;
@@ -165,22 +163,13 @@
             // 
             // btnCancelEdit
             // 
-            this.btnCancelEdit.Location = new System.Drawing.Point(197, 514);
+            this.btnCancelEdit.Location = new System.Drawing.Point(197, 422);
             this.btnCancelEdit.Name = "btnCancelEdit";
             this.btnCancelEdit.Size = new System.Drawing.Size(108, 23);
             this.btnCancelEdit.TabIndex = 13;
             this.btnCancelEdit.Text = "Cancelar";
             this.btnCancelEdit.UseVisualStyleBackColor = true;
             this.btnCancelEdit.Click += new System.EventHandler(this.btnCancelEdit_Click);
-            // 
-            // lstImagenesEdit
-            // 
-            this.lstImagenesEdit.FormattingEnabled = true;
-            this.lstImagenesEdit.Location = new System.Drawing.Point(129, 355);
-            this.lstImagenesEdit.Name = "lstImagenesEdit";
-            this.lstImagenesEdit.Size = new System.Drawing.Size(176, 108);
-            this.lstImagenesEdit.TabIndex = 14;
-            this.lstImagenesEdit.SelectedIndexChanged += new System.EventHandler(this.lstImagenesEdit_SelectedIndexChanged);
             // 
             // lblEditImag
             // 
@@ -203,32 +192,22 @@
             // 
             // btnItemImagenEdit
             // 
-            this.btnItemImagenEdit.Location = new System.Drawing.Point(129, 469);
+            this.btnItemImagenEdit.Location = new System.Drawing.Point(129, 370);
             this.btnItemImagenEdit.Name = "btnItemImagenEdit";
-            this.btnItemImagenEdit.Size = new System.Drawing.Size(95, 23);
+            this.btnItemImagenEdit.Size = new System.Drawing.Size(176, 23);
             this.btnItemImagenEdit.TabIndex = 17;
-            this.btnItemImagenEdit.Text = "Editar/Eliminar";
+            this.btnItemImagenEdit.Text = "Gestionar Imagenes";
             this.btnItemImagenEdit.UseVisualStyleBackColor = true;
-            // 
-            // btnItemImagenAdd
-            // 
-            this.btnItemImagenAdd.Location = new System.Drawing.Point(225, 469);
-            this.btnItemImagenAdd.Name = "btnItemImagenAdd";
-            this.btnItemImagenAdd.Size = new System.Drawing.Size(80, 23);
-            this.btnItemImagenAdd.TabIndex = 18;
-            this.btnItemImagenAdd.Text = "Agregar";
-            this.btnItemImagenAdd.UseVisualStyleBackColor = true;
+            this.btnItemImagenEdit.Click += new System.EventHandler(this.btnItemImagenEdit_Click);
             // 
             // frmItemEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(322, 549);
-            this.Controls.Add(this.btnItemImagenAdd);
+            this.ClientSize = new System.Drawing.Size(322, 472);
             this.Controls.Add(this.btnItemImagenEdit);
             this.Controls.Add(this.lblLeyendaEdit);
             this.Controls.Add(this.lblEditImag);
-            this.Controls.Add(this.lstImagenesEdit);
             this.Controls.Add(this.btnCancelEdit);
             this.Controls.Add(this.btnSaveEdit);
             this.Controls.Add(this.lblPrecioEdit);
@@ -267,10 +246,8 @@
         private System.Windows.Forms.Label lblPrecioEdit;
         private System.Windows.Forms.Button btnSaveEdit;
         private System.Windows.Forms.Button btnCancelEdit;
-        private System.Windows.Forms.ListBox lstImagenesEdit;
         private System.Windows.Forms.Label lblEditImag;
         private System.Windows.Forms.Label lblLeyendaEdit;
         private System.Windows.Forms.Button btnItemImagenEdit;
-        private System.Windows.Forms.Button btnItemImagenAdd;
     }
 }

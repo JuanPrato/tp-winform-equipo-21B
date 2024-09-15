@@ -16,6 +16,7 @@ namespace GestorStock
     {
         public Articulo artEdit { get; set; }
         public Articulo artAux { get; set; }
+        private List<Imagen> localImages = new List<Imagen>();
         public frmItemEdit()
         {
             InitializeComponent();
@@ -51,10 +52,6 @@ namespace GestorStock
             this.txtNomEdit.Text = this.artEdit.Nombre.ToString();
             this.txtDescEdit.Text = this.artEdit.Descripcion.ToString();
             this.txtPrecioEdit.Text = this.artEdit.Precio.ToString();
-            this.lstImagenesEdit.DataSource = this.artEdit.Urls;
-
-            // Inicializo estado de botones
-            this.btnItemImagenEdit.Enabled = false;
         }
 
         private void cmbMarEdit_SelectedIndexChanged(object sender, EventArgs e)
@@ -92,9 +89,15 @@ namespace GestorStock
             itemBussiness.updateOne(artAux);
         }
 
-        private void lstImagenesEdit_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnItemImagenEdit_Click(object sender, EventArgs e)
         {
-            this.btnItemImagenEdit.Enabled = true;
+            frmImageLoader frmImageLoader = new frmImageLoader(this.artAux.Nombre, this.artAux.Urls, this.localImages);
+            if (frmImageLoader.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            this.artAux.Urls = frmImageLoader.Urls;
         }
     }
 }
