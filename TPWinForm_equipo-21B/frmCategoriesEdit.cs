@@ -81,6 +81,7 @@ namespace GestorStock
             if (this.cbCategories.SelectedIndex < 0)
             {
                 MessageBox.Show("Debe seleccionar una categoría");
+                return;
             }
             else
             {

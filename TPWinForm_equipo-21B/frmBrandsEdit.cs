@@ -82,6 +82,7 @@ namespace GestorStock
             if (this.cmbBrandsEdit.SelectedIndex < 0)
             {
                 MessageBox.Show("Debe seleccionar una marca");
+                return;
             }
             else
             {
