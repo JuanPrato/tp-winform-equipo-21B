@@ -104,7 +104,7 @@ namespace GestorStock
                     DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la marca " + marca.Descripcion.ToString());
                     if (res == DialogResult.OK)
                     {
-                        brandBus.deleteOne(marca.Id.ToString());
+                        brandBus.deleteOne(marca);
                         MessageBox.Show("Marca " + marca.Descripcion.ToString() + " eliminada con éxito.");
                     }
                     else

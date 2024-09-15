@@ -103,7 +103,7 @@ namespace GestorStock
                     DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la categoría " + categoria.Descripcion.ToString());
                     if (res == DialogResult.OK)
                     {
-                        catBus.deleteOne(categoria.Id.ToString());
+                        catBus.deleteOne(categoria);
                         MessageBox.Show("Categoría " + categoria.Descripcion.ToString() + " eliminada con éxito.");
                     }
                     else
