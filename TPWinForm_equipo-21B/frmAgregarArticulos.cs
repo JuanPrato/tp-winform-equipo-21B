@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Configuration;
 
 namespace GestorStock
 {
@@ -16,6 +18,7 @@ namespace GestorStock
     {
 
         private List<Imagen> images = new List<Imagen>();
+        private List<Imagen> localImages = new List<Imagen>();
 
         public frmAgregarArticulos()
         {
@@ -26,6 +29,9 @@ namespace GestorStock
         {
             try
             {
+                // 0. Guardo los archivos subidos localmente
+                saveLocalImages();
+
                 // 1. Crear una instancia de ItemBussiness
                 ItemBussiness itemBusiness = new ItemBussiness();
 
@@ -128,23 +134,44 @@ namespace GestorStock
 
         private void btnAddImages_Click(object sender, EventArgs e)
         {
-            frmImageLoader imageLoader = new frmImageLoader(this.tbNombre.Text, this.images);
+            frmImageLoader imageLoader = new frmImageLoader(this.tbNombre.Text, this.images, this.localImages);
 
             if (imageLoader.ShowDialog() != DialogResult.OK) {
                 return;
             }
 
             this.images = imageLoader.Urls;
+            this.localImages = imageLoader.LocalFiles;
 
             this.lvUrls.Items.Clear();
 
-            this.lvUrls.Items.AddRange(this.images.Select(image =>
-            {
-                ListViewItem item = new ListViewItem();
-                item.Text = image.Url;
+            this.lvUrls.Items.AddRange(this.images.Select(parseImageToItem).ToArray());
 
-                return item;
-            }).ToArray());
+            this.lvUrls.Items.AddRange(this.localImages.Select(parseImageToItem).ToArray());
+
+        }
+    
+        private ListViewItem parseImageToItem(Imagen image)
+        {
+            ListViewItem item = new ListViewItem();
+            item.Text = image.Url;
+
+            return item;
+        } 
+
+        private void saveLocalImages()
+        {
+            string path = Environment.CurrentDirectory + ConfigurationManager.AppSettings["images-folder"];
+
+            foreach (Imagen img in this.localImages)
+            {
+
+                string extension = img.Url.Split('.').Last();
+
+                File.Copy(img.Url, path + $"image-{this.tbCodigo.Text.Trim()}-{this.images.Count}.{extension}");
+                img.Url = path + $"image-{this.tbCodigo}-{this.images.Count}";
+                this.images.Add(img);
+            }
         }
     }
 }

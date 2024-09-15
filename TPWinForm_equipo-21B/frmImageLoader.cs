@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
-using System.IO;
 
 namespace GestorStock
 {
@@ -16,13 +15,15 @@ namespace GestorStock
     {
 
         public List<Imagen> Urls { get; }
+        public List<Imagen> LocalFiles { get; }
 
-        public frmImageLoader(string articleName, List<Imagen> defaultUrls)
+        public frmImageLoader(string articleName, List<Imagen> defaultUrls, List<Imagen> defaultLocalFiles)
         {
             InitializeComponent();
 
             this.lbTitle.Text = this.lbTitle.Text + $" {articleName}";
             this.Urls = defaultUrls;
+            this.LocalFiles = defaultLocalFiles;
         }
 
         private void frmImageLoader_Load(object sender, EventArgs e)
@@ -30,6 +31,10 @@ namespace GestorStock
             this.dvgUrls.DataSource = Urls;
         }
 
+        private int getTotalImgs()
+        {
+            return this.Urls.Count + this.LocalFiles.Count;
+        }
 
         private void btnAddUrl_Click(object sender, EventArgs e)
         {
@@ -46,9 +51,21 @@ namespace GestorStock
         {
             if (this.dvgUrls.CurrentRow == null) return;
 
-            Imagen img = (Imagen)this.dvgUrls.CurrentRow.DataBoundItem;
+            if (this.dvgUrls.CurrentRow.Index >= this.dvgUrls.RowCount) return;
 
-            this.pbImage.Load(img.Url);
+            Imagen img = (Imagen)this.dvgUrls.CurrentRow.DataBoundItem;
+            
+            this.btnDelete.Enabled = true;
+
+            try
+            {
+                this.pbImage.Load(img.Url);
+            } catch(Exception)
+            {
+                MessageBox.Show("Error al cargar la imagen. Se recomienda no usar esa imagen", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
         }
 
         private void btnLoadImage_Click(object sender, EventArgs e)
@@ -57,13 +74,19 @@ namespace GestorStock
             openFileDialog.Filter = "jpg|*.jpg";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK) {
-
-                string fileRoute = Environment.CurrentDirectory + ConfigurationManager.AppSettings["images-folder"] + openFileDialog.SafeFileName;
-
-                File.Copy(openFileDialog.FileName, fileRoute);
-
-                loadNewImage(fileRoute);
+                //loadNewImage(openFileDialog.FileName);
+                addNewLocalFile(openFileDialog.FileName);
             }
+        }
+
+        private void reloadUrls()
+        {
+            List<Imagen> list = new List<Imagen>();
+
+            list.AddRange(this.Urls);
+            list.AddRange(this.LocalFiles);
+
+            this.dvgUrls.DataSource = list;
         }
 
         private void loadNewImage(string url)
@@ -73,16 +96,24 @@ namespace GestorStock
 
             this.Urls.Add(imagen);
 
-            // Se usa una lista nueva para que se haga una refresh de lo pintado
-            List<Imagen> list = new List<Imagen>();
-
-            list.AddRange(this.Urls);
-
-            this.dvgUrls.DataSource = list;
+            reloadUrls();
 
             this.tbUrl.Text = null;
 
-            this.dvgUrls.CurrentCell = this.dvgUrls.Rows[list.Count - 1].Cells[0];
+            this.dvgUrls.CurrentCell = this.dvgUrls.Rows[getTotalImgs() - 1].Cells[0];
+
+        }
+
+        private void addNewLocalFile(string url)
+        {
+            Imagen imagen = new Imagen();
+            imagen.Url = url;
+
+            this.LocalFiles.Add(imagen);
+
+            reloadUrls();
+
+            this.dvgUrls.CurrentCell = this.dvgUrls.Rows[getTotalImgs() - 1].Cells[0];
 
             this.pbImage.Load(imagen.Url);
         }
@@ -91,6 +122,18 @@ namespace GestorStock
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (this.dvgUrls.CurrentRow == null) return;
+
+            Imagen img = (Imagen)this.dvgUrls.CurrentRow.DataBoundItem;
+
+            this.Urls.Remove(img);
+            this.LocalFiles.Remove(img);
+
+            reloadUrls();
         }
     }
 }

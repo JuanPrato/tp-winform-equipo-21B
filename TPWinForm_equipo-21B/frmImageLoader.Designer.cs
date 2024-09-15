@@ -34,7 +34,7 @@
             this.tbUrl = new System.Windows.Forms.TextBox();
             this.pbImage = new System.Windows.Forms.PictureBox();
             this.btnLoadImage = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvgUrls)).BeginInit();
@@ -107,16 +107,17 @@
             this.btnLoadImage.UseVisualStyleBackColor = true;
             this.btnLoadImage.Click += new System.EventHandler(this.btnLoadImage_Click);
             // 
-            // button3
+            // btnDelete
             // 
-            this.button3.Enabled = false;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.button3.Location = new System.Drawing.Point(157, 318);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(135, 26);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Borrar";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnDelete.Enabled = false;
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.btnDelete.Location = new System.Drawing.Point(157, 318);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(135, 26);
+            this.btnDelete.TabIndex = 6;
+            this.btnDelete.Text = "Borrar";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // label1
             // 
@@ -146,7 +147,7 @@
             this.ClientSize = new System.Drawing.Size(571, 351);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnLoadImage);
             this.Controls.Add(this.pbImage);
             this.Controls.Add(this.tbUrl);
@@ -172,7 +173,7 @@
         private System.Windows.Forms.TextBox tbUrl;
         private System.Windows.Forms.PictureBox pbImage;
         private System.Windows.Forms.Button btnLoadImage;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSave;
     }

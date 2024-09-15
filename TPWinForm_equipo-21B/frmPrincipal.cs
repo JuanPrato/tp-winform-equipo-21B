@@ -29,12 +29,7 @@ namespace GestorStock
                 Directory.CreateDirectory(ConfigurationManager.AppSettings["images-folder-name"]);
             }
 
-            ItemBussiness itemBussiness = new ItemBussiness();
-
-            List<Articulo> articulos = itemBussiness.getAll();
-            
-
-            this.dgvArticles.DataSource = articulos;
+            this.loadItems();
 
             this.dgvArticles.ClearSelection();
 
@@ -45,17 +40,15 @@ namespace GestorStock
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            ItemBussiness itemBussiness = new ItemBussiness();
-
-            List<Articulo> articulos = itemBussiness.getAllFilterByName(this.tbSearch.Text.Trim());
-
-            this.dgvArticles.DataSource = articulos;
+            this.loadItems();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             frmAgregarArticulos ventana = new frmAgregarArticulos();
             ventana.ShowDialog();
+
+            loadItems();
         }
 
         private void agregarToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -121,6 +114,24 @@ namespace GestorStock
             frmItemEdit modalEditItem = new frmItemEdit();
             modalEditItem.artEdit = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
             modalEditItem.ShowDialog();
+        }
+
+        private void loadItems()
+        {
+            string text = this.tbSearch.Text.Trim();
+            ItemBussiness itemBussiness = new ItemBussiness();
+            List<Articulo> articulos;
+
+            if (text.Length > 0)
+            {
+                articulos = itemBussiness.getAllFilterByName(this.tbSearch.Text.Trim());
+
+            } else
+            {
+                articulos = itemBussiness.getAll();
+            }
+
+            this.dgvArticles.DataSource = articulos;
         }
     }
 }
