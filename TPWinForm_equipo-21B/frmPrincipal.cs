@@ -82,7 +82,7 @@ namespace GestorStock
             {
                 ItemBussiness itemBus = new ItemBussiness();
                 Articulo item = new Articulo();
-                item = (Articulo)this.dgvArticles.CurrentRow.DataBoundItem;
+                item = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
                 DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString());
                 if (res == DialogResult.OK)
                 {
@@ -114,6 +114,13 @@ namespace GestorStock
         {
             this.btnDelete.Enabled = true;
             this.btnModify.Enabled = true;
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            frmItemEdit modalEditItem = new frmItemEdit();
+            modalEditItem.artEdit = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
+            modalEditItem.ShowDialog();
         }
     }
 }
