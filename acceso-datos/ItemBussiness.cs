@@ -15,8 +15,6 @@ namespace acceso_datos
         }
         override public List<Articulo> getAll()
         {
-
-
             return base.select(
                 $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, c.Descripcion as CatDescription, m.Descripcion as MarDescription",
                 "INNER JOIN CATEGORIAS c ON c.Id=IdCategoria " +
@@ -41,7 +39,6 @@ namespace acceso_datos
                 imageBussiness.saveOne(img);
             }
 
-
             return id;
         }
 
@@ -49,5 +46,6 @@ namespace acceso_datos
         {
             return this.getAllFilterByTextContain(1, query);
         }
+
     }
 }

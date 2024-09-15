@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -77,22 +78,39 @@ namespace GestorStock
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (this.cbCategories.SelectedIndex < 0)
+            {
+                CategoryBussiness catBus = new CategoryBussiness();
+                Categoria categoria = new Categoria();
+                categoria = this.cbCategories.SelectedItem as Categoria;
 
-            // TODO: Ver si vale la pena ya que los items tienen una FK a Categorias;
-            if (!this.deleteConfirm) {
-                this.deleteConfirm = true;
-                this.btnDelete.Text = "Seguro?";
-                
-                return;
+                ItemBussiness itemBus = new ItemBussiness();
+                List<Articulo> articulos = itemBus.getAll();
+
+                if (articulos.Any(a => a.Categoria.Id == categoria.Id))
+                {
+                    MessageBox.Show("No se puede eliminar la categoría ya que hay artículos asociados.");
+                    return;
+
+                }
+                else
+                {
+                    DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la categoría " + categoria.Descripcion.ToString());
+                    if (res == DialogResult.OK)
+                    {
+                        catBus.deleteOne(categoria.Id.ToString());
+                        MessageBox.Show("Categoría " + categoria.Descripcion.ToString() + " eliminada con éxito.");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
             }
-
-            CategoryBussiness categoryBussiness = new CategoryBussiness();
-
-            Categoria selectedCat = (Categoria)this.cbCategories.SelectedItem;
-
-            categoryBussiness.deleteOne(selectedCat.Id.ToString());
-
-            MessageBox.Show($"Se borro con exito la categoria {selectedCat.Descripcion}");
+            else
+            {
+                MessageBox.Show("Debe seleccionar una categoría");
+            }
         }
     }
 }

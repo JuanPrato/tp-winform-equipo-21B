@@ -76,5 +76,41 @@ namespace GestorStock
                 MessageBox.Show("Ocurrió un error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnBrandsEditDelete_Click(object sender, EventArgs e)
+        {
+            if (this.cmbBrandsEdit.SelectedIndex < 0)
+            {
+                BrandBussiness brandBus = new BrandBussiness();
+                Marca marca = new Marca();
+                marca = this.cmbBrandsEdit.SelectedItem as Marca;
+
+                ItemBussiness itemBus = new ItemBussiness();
+                List<Articulo> articulos = itemBus.getAll();
+
+                if(articulos.Any(a => a.Marca.Id == marca.Id))
+                {
+                    MessageBox.Show("No se puede eliminar la marca ya que hay artículos asociados.");
+                    return;
+
+                } else
+                {
+                    DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la marca " + marca.Descripcion.ToString());
+                    if (res == DialogResult.OK)
+                    {
+                        brandBus.deleteOne(marca.Id.ToString());
+                        MessageBox.Show("Marca " + marca.Descripcion.ToString() + " eliminada con éxito.");
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una marca");
+            }
+        }
     }
 }

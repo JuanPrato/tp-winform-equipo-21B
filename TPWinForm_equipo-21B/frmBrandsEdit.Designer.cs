@@ -88,6 +88,7 @@
             this.btnBrandsEditDelete.TabIndex = 5;
             this.btnBrandsEditDelete.Text = "Borrar";
             this.btnBrandsEditDelete.UseVisualStyleBackColor = true;
+            this.btnBrandsEditDelete.Click += new System.EventHandler(this.btnBrandsEditDelete_Click);
             // 
             // frmBrandsEdit
             // 

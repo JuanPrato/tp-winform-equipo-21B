@@ -150,6 +150,20 @@ namespace acceso_datos
             update(String.Join(" ,", sets), $"WHERE {idColumn}={this.mapper.getIdentifier(item)}");
         }
 
+        public void deleteArticulo(int id)
+        {
+            sqlConexion.Open();
+
+            string query = "DELETE FROM ARTICULOS A INNER JOIN IMAGENES Im ON Im.IdArticulo = A.Id WHERE A.Id = " + id;
+            SqlDataReader reader = this.executeCommand(query);
+
+            if (!reader.Read())
+            {
+                throw new Exception();
+            }
+            sqlConexion.Close();
+        }
+
         private SqlDataReader executeCommand(string sqlCommand)
         {
             SqlCommand command = new SqlCommand();

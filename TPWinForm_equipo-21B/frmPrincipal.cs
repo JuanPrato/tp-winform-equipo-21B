@@ -86,7 +86,7 @@ namespace GestorStock
                 DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString());
                 if (res == DialogResult.OK)
                 {
-                    itemBus.deleteOne(item.Id.ToString());
+                    itemBus.deleteArticulo(item.Id);
                     MessageBox.Show("Artículo " + item.Id.ToString() + " eliminado con éxito.");
                 } else
                 {
