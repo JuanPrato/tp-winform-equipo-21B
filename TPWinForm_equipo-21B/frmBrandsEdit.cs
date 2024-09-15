@@ -81,6 +81,10 @@ namespace GestorStock
         {
             if (this.cmbBrandsEdit.SelectedIndex < 0)
             {
+                MessageBox.Show("Debe seleccionar una marca");
+            }
+            else
+            {
                 BrandBussiness brandBus = new BrandBussiness();
                 Marca marca = new Marca();
                 marca = this.cmbBrandsEdit.SelectedItem as Marca;
@@ -88,12 +92,13 @@ namespace GestorStock
                 ItemBussiness itemBus = new ItemBussiness();
                 List<Articulo> articulos = itemBus.getAll();
 
-                if(articulos.Any(a => a.Marca.Id == marca.Id))
+                if (articulos.Any(a => a.Marca.Id == marca.Id))
                 {
                     MessageBox.Show("No se puede eliminar la marca ya que hay artículos asociados.");
                     return;
 
-                } else
+                }
+                else
                 {
                     DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la marca " + marca.Descripcion.ToString());
                     if (res == DialogResult.OK)
@@ -106,10 +111,6 @@ namespace GestorStock
                         return;
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Debe seleccionar una marca");
             }
         }
     }

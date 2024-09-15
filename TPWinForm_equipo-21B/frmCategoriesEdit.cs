@@ -80,6 +80,10 @@ namespace GestorStock
         {
             if (this.cbCategories.SelectedIndex < 0)
             {
+                MessageBox.Show("Debe seleccionar una categoría");
+            }
+            else
+            {
                 CategoryBussiness catBus = new CategoryBussiness();
                 Categoria categoria = new Categoria();
                 categoria = this.cbCategories.SelectedItem as Categoria;
@@ -106,10 +110,6 @@ namespace GestorStock
                         return;
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("Debe seleccionar una categoría");
             }
         }
     }

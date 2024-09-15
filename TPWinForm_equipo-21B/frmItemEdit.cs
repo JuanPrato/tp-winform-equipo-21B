@@ -30,6 +30,7 @@ namespace GestorStock
         {
             // Inicializo el artículo auxiliar
             this.artAux = new Articulo();
+            this.artAux = artEdit;
 
             // Inicializo combobox de categorías con la categoría seleccionada del artículo a modificar
             CategoryBussiness categoryBussiness = new CategoryBussiness();
@@ -50,6 +51,10 @@ namespace GestorStock
             this.txtNomEdit.Text = this.artEdit.Nombre.ToString();
             this.txtDescEdit.Text = this.artEdit.Descripcion.ToString();
             this.txtPrecioEdit.Text = this.artEdit.Precio.ToString();
+            this.lstImagenesEdit.DataSource = this.artEdit.Urls;
+
+            // Inicializo estado de botones
+            this.btnItemImagenEdit.Enabled = false;
         }
 
         private void cmbMarEdit_SelectedIndexChanged(object sender, EventArgs e)
@@ -85,6 +90,11 @@ namespace GestorStock
         {
             ItemBussiness itemBussiness = new ItemBussiness();
             itemBussiness.updateOne(artAux);
+        }
+
+        private void lstImagenesEdit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.btnItemImagenEdit.Enabled = true;
         }
     }
 }
