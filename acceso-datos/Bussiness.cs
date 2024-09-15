@@ -26,8 +26,8 @@ namespace acceso_datos
 
             SqlConnectionStringBuilder sConnB = new SqlConnectionStringBuilder()
             {
-                DataSource = ".\\SQLEXPRESS",
-                //DataSource = "localhost",
+                //DataSource = ".\\SQLEXPRESS",
+                DataSource = "localhost",
                 InitialCatalog = "CATALOGO_P3_DB",
                 IntegratedSecurity = true
             };
@@ -119,9 +119,14 @@ namespace acceso_datos
             return res[0];
         }
 
-        public void deleteOne(string id)
+        virtual public void deleteOne(T item)
         {
-            delete($"WHERE {idColumn}={id}");
+            delete($"WHERE {idColumn}={this.mapper.getIdentifier(item)}");
+        }
+
+        public void deleteMany(List<T> items)
+        {
+            delete($"WHERE {idColumn} IN ({String.Join(",", items.Select(item => this.mapper.getIdentifier(item)))})");
         }
 
         public virtual int saveOne(T item)
@@ -148,20 +153,6 @@ namespace acceso_datos
             }
 
             update(String.Join(" ,", sets), $"WHERE {idColumn}={this.mapper.getIdentifier(item)}");
-        }
-
-        public void deleteArticulo(int id)
-        {
-            sqlConexion.Open();
-
-            string query = "DELETE FROM ARTICULOS A INNER JOIN IMAGENES Im ON Im.IdArticulo = A.Id WHERE A.Id = " + id;
-            SqlDataReader reader = this.executeCommand(query);
-
-            if (!reader.Read())
-            {
-                throw new Exception();
-            }
-            sqlConexion.Close();
         }
 
         private SqlDataReader executeCommand(string sqlCommand)

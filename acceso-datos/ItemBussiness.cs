@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SqlClient;
 using dominio;
 
 namespace acceso_datos
@@ -45,6 +46,15 @@ namespace acceso_datos
         public List<Articulo> getAllFilterByName(string query)
         {
             return this.getAllFilterByTextContain(1, query);
+        }
+
+        public override void deleteOne(Articulo item)
+        {
+            ImageBussiness imageBussiness = new ImageBussiness();
+
+            imageBussiness.deleteMany(item.Urls);
+
+            base.deleteOne(item);
         }
 
     }

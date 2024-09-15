@@ -173,5 +173,10 @@ namespace GestorStock
                 this.images.Add(img);
             }
         }
+
+        private void tbCodigo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

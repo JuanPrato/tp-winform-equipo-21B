@@ -41,7 +41,7 @@ namespace GestorStock
         {
             this.tbDescription.Enabled = true;
             this.btnSave.Enabled = true;
-            //this.btnDelete.Enabled = true;
+            this.btnDelete.Enabled = true;
 
             //this.deleteConfirm = false;
 

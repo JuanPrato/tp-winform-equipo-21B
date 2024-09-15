@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Configuration;
+using System.Globalization;
 
 namespace GestorStock
 {
@@ -79,7 +80,7 @@ namespace GestorStock
                 DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString());
                 if (res == DialogResult.OK)
                 {
-                    itemBus.deleteArticulo(item.Id);
+                    itemBus.deleteOne(item);
                     MessageBox.Show("Artículo " + item.Id.ToString() + " eliminado con éxito.");
                 } else
                 {
@@ -132,6 +133,12 @@ namespace GestorStock
             }
 
             this.dgvArticles.DataSource = articulos;
+
+            var format = (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
+            format.CurrencySymbol = "AR$ ";
+
+            this.dgvArticles.Columns["Precio"].DefaultCellStyle.FormatProvider = format;
+            this.dgvArticles.Columns["Precio"].DefaultCellStyle.Format = "C2";
         }
     }
 }
