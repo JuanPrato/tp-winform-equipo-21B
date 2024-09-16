@@ -16,11 +16,18 @@ namespace acceso_datos
         }
         override public List<Articulo> getAll()
         {
-            return base.select(
+            List<Articulo> articulos = new List<Articulo>();
+            ImageBussiness img = new ImageBussiness();
+
+            articulos = base.select(
                 $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, c.Descripcion as CatDescription, m.Descripcion as MarDescription",
                 "INNER JOIN CATEGORIAS c ON c.Id=IdCategoria " +
                 "INNER JOIN MARCAS m ON m.Id=IdMarca"
                 );
+
+            articulos.ForEach(a => a.Urls = img.getByIdArticulo(a.Id));
+
+            return articulos;
         }
 
         override public int saveOne(Articulo art)
@@ -45,7 +52,13 @@ namespace acceso_datos
 
         public List<Articulo> getAllFilterByName(string query)
         {
-            return this.getAllFilterByTextContain(1, query);
+            List<Articulo> articulos = new List<Articulo>();
+            ImageBussiness img = new ImageBussiness();
+            articulos = this.getAllFilterByTextContain(1, query);
+            articulos.ForEach(a => a.Urls = img.getByIdArticulo(a.Id));
+
+            return articulos;
+
         }
 
         public override void deleteOne(Articulo item)
