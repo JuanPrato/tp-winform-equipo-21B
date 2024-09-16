@@ -41,14 +41,18 @@
             this.pcbImagenes.Location = new System.Drawing.Point(276, 51);
             this.pcbImagenes.Name = "pcbImagenes";
             this.pcbImagenes.Size = new System.Drawing.Size(256, 192);
+            this.pcbImagenes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbImagenes.TabIndex = 0;
             this.pcbImagenes.TabStop = false;
             // 
             // dgvUrls
             // 
             this.dgvUrls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUrls.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvUrls.Location = new System.Drawing.Point(12, 51);
+            this.dgvUrls.MultiSelect = false;
             this.dgvUrls.Name = "dgvUrls";
+            this.dgvUrls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUrls.Size = new System.Drawing.Size(248, 192);
             this.dgvUrls.TabIndex = 1;
             this.dgvUrls.SelectionChanged += new System.EventHandler(this.dgvUrls_SelectionChanged);
@@ -83,6 +87,7 @@
             this.Controls.Add(this.dgvUrls);
             this.Controls.Add(this.pcbImagenes);
             this.Name = "frmItemImages";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ver imágenes";
             this.Load += new System.EventHandler(this.frmItemImages_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pcbImagenes)).EndInit();

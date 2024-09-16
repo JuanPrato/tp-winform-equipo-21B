@@ -20,15 +20,19 @@ namespace GestorStock
 
             this.lblVerImagenes.Text = "Imagenes del artículo " + articleName;
             this.imagenes = urls;
+            this.dgvUrls.ClearSelection();
         }
 
         private void frmItemImages_Load(object sender, EventArgs e)
         {
             this.dgvUrls.DataSource = this.imagenes;
+            this.dgvUrls.ClearSelection();
         }
 
         private void dgvUrls_SelectionChanged(object sender, EventArgs e)
         {
+            if (!this.dgvUrls.Focused) return;
+
             if (this.dgvUrls.CurrentRow == null) return;
 
             if (this.dgvUrls.CurrentRow.Index >= this.dgvUrls.RowCount) return;
@@ -39,8 +43,9 @@ namespace GestorStock
             {
                 this.pcbImagenes.Load(img.Url);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
+                Console.WriteLine(exc.Message);
                 MessageBox.Show("Error al cargar la imagen. Se recomienda no usar esa imagen", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -48,7 +53,7 @@ namespace GestorStock
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
     }
 }
