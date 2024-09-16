@@ -36,6 +36,7 @@ namespace GestorStock
 
             this.btnDelete.Enabled = false;
             this.btnModify.Enabled = false;
+            this.btnVerImagenes.Enabled = false;
 
         }
 
@@ -108,6 +109,7 @@ namespace GestorStock
         {
             this.btnDelete.Enabled = true;
             this.btnModify.Enabled = true;
+            this.btnVerImagenes.Enabled = true;
         }
 
         private void btnModify_Click(object sender, EventArgs e)
@@ -139,6 +141,13 @@ namespace GestorStock
 
             this.dgvArticles.Columns["Precio"].DefaultCellStyle.FormatProvider = format;
             this.dgvArticles.Columns["Precio"].DefaultCellStyle.Format = "C2";
+        }
+
+        private void btnVerImagenes_Click(object sender, EventArgs e)
+        {
+            Articulo ar = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
+            frmItemImages itemImages = new frmItemImages(ar.Nombre, ar.Urls);
+            itemImages.ShowDialog();
         }
     }
 }

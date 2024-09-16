@@ -43,6 +43,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnModify = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnVerImagenes = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvArticles)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -113,7 +114,7 @@
             // agregarToolStripMenuItem
             // 
             this.agregarToolStripMenuItem.Name = "agregarToolStripMenuItem";
-            this.agregarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.agregarToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.agregarToolStripMenuItem.Text = "Agregar";
             // 
             // categoriasToolStripMenuItem1
@@ -192,11 +193,22 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // btnVerImagenes
+            // 
+            this.btnVerImagenes.Location = new System.Drawing.Point(283, 98);
+            this.btnVerImagenes.Name = "btnVerImagenes";
+            this.btnVerImagenes.Size = new System.Drawing.Size(88, 23);
+            this.btnVerImagenes.TabIndex = 8;
+            this.btnVerImagenes.Text = "Ver imagenes";
+            this.btnVerImagenes.UseVisualStyleBackColor = true;
+            this.btnVerImagenes.Click += new System.EventHandler(this.btnVerImagenes_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnVerImagenes);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnModify);
             this.Controls.Add(this.btnAdd);
@@ -234,6 +246,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem agregarToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem modificarOEliminarToolStripMenuItem;
+        private System.Windows.Forms.Button btnVerImagenes;
     }
 }
 
