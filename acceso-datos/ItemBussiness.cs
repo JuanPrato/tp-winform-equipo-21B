@@ -52,7 +52,9 @@ namespace acceso_datos
         {
             ImageBussiness imageBussiness = new ImageBussiness();
 
-            imageBussiness.deleteMany(item.Urls);
+            if (item.Urls != null && item.Urls.Count > 0) { 
+                imageBussiness.deleteMany(item.Urls);
+            }
 
             base.deleteOne(item);
         }
