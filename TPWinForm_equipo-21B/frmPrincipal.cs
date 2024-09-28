@@ -49,9 +49,9 @@ namespace GestorStock
         private void btnAdd_Click(object sender, EventArgs e)
         {
             frmAgregarArticulos ventana = new frmAgregarArticulos();
-            ventana.ShowDialog();
-
-            loadItems();
+            DialogResult res = ventana.ShowDialog();
+            if(res == DialogResult.OK)
+                loadItems();
         }
 
         private void agregarToolStripMenuItem1_Click(object sender, EventArgs e)

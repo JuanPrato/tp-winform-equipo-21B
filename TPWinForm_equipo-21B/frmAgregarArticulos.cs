@@ -29,6 +29,9 @@ namespace GestorStock
         {
             try
             {
+                // Valido los campos antes de guardar imágenes y el artículo
+                validarCampos();
+
                 // 0. Guardo los archivos subidos localmente
                 saveLocalImages();
 
@@ -184,6 +187,20 @@ namespace GestorStock
                 File.Copy(img.Url, path + $"image-{this.tbCodigo.Text.Trim()}-{this.images.Count}.{extension}");
                 img.Url = path + $"image-{this.tbCodigo}-{this.images.Count}";
                 this.images.Add(img);
+            }
+        }
+
+        private void validarCampos()
+        {
+            if (tbCodigo.Text == string.Empty
+                || tbNombre.Text == string.Empty
+                || tbDescripcion.Text == string.Empty
+                || (tbPrecio.Text == string.Empty
+                || decimal.Parse(tbPrecio.Text) < 0)
+                || cmbCategoria.SelectedIndex < 0
+                || cmbMarca.SelectedIndex < 0)
+            {
+                throw new FormatException();
             }
         }
 
