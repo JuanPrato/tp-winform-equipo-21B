@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace acceso_datos
@@ -17,8 +18,10 @@ namespace acceso_datos
 
         public List<string> mapFromObject(Marca obj)
         {
-            return new List<string>();
-            //return obj.ToString();
+            //return new List<string>();
+            List<string> desc = new List<string>();
+            desc.Add($"'{obj.Descripcion}'");
+            return desc;
         }
 
         public Marca mapToObject(SqlDataReader reader)

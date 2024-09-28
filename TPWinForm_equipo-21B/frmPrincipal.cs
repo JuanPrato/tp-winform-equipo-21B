@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Configuration;
 using System.Globalization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GestorStock
 {
@@ -116,7 +117,12 @@ namespace GestorStock
         {
             frmItemEdit modalEditItem = new frmItemEdit();
             modalEditItem.artEdit = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
-            modalEditItem.ShowDialog();
+            DialogResult res = modalEditItem.ShowDialog();
+
+            if(res == DialogResult.OK)
+            {
+                this.loadItems();
+            }
         }
 
         private void loadItems()

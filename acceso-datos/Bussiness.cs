@@ -10,11 +10,11 @@ namespace acceso_datos
 {
     public abstract class Bussiness<T>
     {
-        private string tableName;
+        public string tableName;
         protected string idColumn;
-        private List<string> columns;
-        private SqlConnection sqlConexion = new SqlConnection();
-        private SqlDataReader reader;
+        public List<string> columns;
+        public SqlConnection sqlConexion = new SqlConnection();
+        public SqlDataReader reader;
         private IDBMapper<T> mapper;
 
         public Bussiness(string tableName, string idColumn, List<string> rows, IDBMapper<T> mapper)
@@ -79,7 +79,7 @@ namespace acceso_datos
             sqlConexion.Close();
         }
 
-        protected int insert(string values)
+        virtual public int insert(string values)
         {
             int id = -1;
             sqlConexion.Open();
@@ -96,7 +96,7 @@ namespace acceso_datos
             return id;
         }
 
-        protected List<T> getAllFilterByTextContain(int columnIndex, string text)
+        virtual public List<T> getAllFilterByTextContain(int columnIndex, string text)
         {
             return select($"{idColumn}, {String.Join(" ,", columns)}", $"WHERE {columns[columnIndex]} LIKE '%{text}%'");
         }
@@ -155,7 +155,7 @@ namespace acceso_datos
             update(String.Join(" ,", sets), $"WHERE {idColumn}={this.mapper.getIdentifier(item)}");
         }
 
-        private SqlDataReader executeCommand(string sqlCommand)
+        public SqlDataReader executeCommand(string sqlCommand)
         {
             SqlCommand command = new SqlCommand();
 

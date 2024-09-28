@@ -21,23 +21,32 @@ namespace GestorStock
 
         private void btnSaveCategory_Click(object sender, EventArgs e)
         {
-            string text = this.tbDescription.Text;
-
-            if (text.Trim().Length == 0)
+            try
             {
-                this.lbError.Text = "Descripción invalida";
-                return;
+                string text = this.tbDescription.Text;
+
+                if (text.Trim().Length == 0)
+                {
+                    this.lbError.Text = "Descripción invalida";
+                    return;
+                }
+
+                CategoryBussiness categoryBussiness = new CategoryBussiness();
+
+                Categoria categoria = new Categoria();
+
+                categoria.Descripcion = text.Trim();
+
+                categoryBussiness.saveOne(categoria);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            CategoryBussiness categoryBussiness = new CategoryBussiness();
-
-            Categoria categoria = new Categoria();
-
-            categoria.Descripcion = text.Trim();
-
-            categoryBussiness.saveOne(categoria);
-
-            this.Close();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

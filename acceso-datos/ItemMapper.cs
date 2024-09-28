@@ -26,7 +26,7 @@ namespace acceso_datos
             args.Add($"'{obj.Descripcion}'");
             args.Add($"{obj.Marca.Id}");
             args.Add($"{obj.Categoria.Id}");
-            args.Add($"{obj.Precio}");
+            args.Add($"{obj.Precio.ToString().Replace(',', '.')}");
 
             return args;
         }

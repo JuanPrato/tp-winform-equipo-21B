@@ -21,23 +21,31 @@ namespace GestorStock
 
         private void btnSaveBrand_Click(object sender, EventArgs e)
         {
-            string text = this.txtDescripcionMarca.Text;
-
-            if (text.Trim().Length == 0)
+            try
             {
-                this.lblError.Text = "Descripción invalida";
-                return;
+                string text = this.txtDescripcionMarca.Text;
+
+                if (text.Trim().Length == 0)
+                {
+                    this.lblError.Text = "Descripción invalida";
+                    return;
+                }
+
+                BrandBussiness brandBussiness = new BrandBussiness();
+
+                Marca marca = new Marca();
+
+                marca.Descripcion = text.Trim();
+
+                brandBussiness.saveOne(marca);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-
-            BrandBussiness brandBussiness = new BrandBussiness();
-
-            Marca marca = new Marca();
-
-            marca.Descripcion = text.Trim();
-
-            brandBussiness.saveOne(marca);
-
-            this.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

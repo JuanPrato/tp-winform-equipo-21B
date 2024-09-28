@@ -56,37 +56,55 @@ namespace GestorStock
 
         private void cmbMarEdit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.artAux.Marca = this.cmbMarEdit.SelectedItem as Marca;
+            //this.artAux.Marca = this.cmbMarEdit.SelectedItem as Marca;
         }
+
         private void cmbCatEdit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.artAux.Categoria = this.cmbCatEdit.SelectedItem as Categoria;
+            //this.artAux.Categoria = this.cmbCatEdit.SelectedItem as Categoria;
         }
 
         private void txtPrecioEdit_TextChanged(object sender, EventArgs e)
         {
-            this.artAux.Precio = Decimal.Parse(this.txtPrecioEdit.Text);
+            //this.artAux.Precio = Decimal.Parse(this.txtPrecioEdit.Text);
         }
 
         private void txtDescEdit_TextChanged(object sender, EventArgs e)
         {
-            this.artAux.Descripcion = this.txtDescEdit.Text;
+            //this.artAux.Descripcion = this.txtDescEdit.Text;
         }
 
         private void txtNomEdit_TextChanged(object sender, EventArgs e)
         {
-            this.artAux.Nombre = this.txtNomEdit.Text;
+            //this.artAux.Nombre = this.txtNomEdit.Text;
         }
 
         private void txtCodEdit_TextChanged(object sender, EventArgs e)
         {
-            this.artAux.Codigo = this.txtCodEdit.Text;
+            //this.artAux.Codigo = this.txtCodEdit.Text;
         }
 
         private void btnSaveEdit_Click(object sender, EventArgs e)
         {
-            ItemBussiness itemBussiness = new ItemBussiness();
-            itemBussiness.updateOne(artAux);
+            try
+            {
+                // Actualizo los valores en mi articulo
+                this.artAux.Nombre = this.txtNomEdit.Text;
+                this.artAux.Descripcion = this.txtDescEdit.Text;
+                this.artAux.Codigo = this.txtCodEdit.Text;
+                this.artAux.Precio = Decimal.Parse(this.txtPrecioEdit.Text);
+                this.artAux.Categoria = this.cmbCatEdit.SelectedItem as Categoria;
+                this.artAux.Marca = this.cmbMarEdit.SelectedItem as Marca;
+                ItemBussiness itemBussiness = new ItemBussiness();
+                itemBussiness.updateOne(artAux);
+
+                DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocurrió un error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnItemImagenEdit_Click(object sender, EventArgs e)

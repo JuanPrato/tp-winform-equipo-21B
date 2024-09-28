@@ -30,6 +30,23 @@ namespace acceso_datos
             return articulos;
         }
 
+        override public List<Articulo> getAllFilterByTextContain(int columnaIndex, string text)
+        {
+            List<Articulo> articulos = new List<Articulo>();
+            ImageBussiness img = new ImageBussiness();
+
+            articulos = base.select(
+                $"t.{idColumn}, t.{String.Join(" ,t.", columns)}, c.Descripcion as CatDescription, m.Descripcion as MarDescription",
+                "INNER JOIN CATEGORIAS c ON c.Id=IdCategoria " +
+                "INNER JOIN MARCAS m ON m.Id=IdMarca" +
+                $" WHERE {columns[columnaIndex]} LIKE '%{text}%'"
+                );
+
+            articulos.ForEach(a => a.Urls = img.getByIdArticulo(a.Id));
+
+            return articulos;
+        }
+
         override public int saveOne(Articulo art)
         {
             int id = base.saveOne(art);

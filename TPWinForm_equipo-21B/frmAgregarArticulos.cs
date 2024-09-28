@@ -122,14 +122,27 @@ namespace GestorStock
         private void btnAgregarCat_Click(object sender, EventArgs e)
         {
             frmCategoriesAdd modalAddCategory = new frmCategoriesAdd();
+            DialogResult res = modalAddCategory.ShowDialog();
 
-            modalAddCategory.ShowDialog();
+            if(res == DialogResult.OK)
+            {
+                // Actualizamos el comboBox de categorías si se agregó alguna
+                CategoryBussiness catBussiness = new CategoryBussiness();
+                this.cmbCategoria.DataSource = catBussiness.getAll();
+            }
         }
 
         private void btnAgregarMar_Click(object sender, EventArgs e)
         {
             frmBrandsAdd modalAddBrand = new frmBrandsAdd();
-            modalAddBrand.ShowDialog();
+            DialogResult res = modalAddBrand.ShowDialog();
+
+            if (res == DialogResult.OK)
+            {
+                // Actualizamos el comboBox de categorías si se agregó alguna
+                BrandBussiness marBussiness = new BrandBussiness();
+                this.cmbMarca.DataSource = marBussiness.getAll();
+            }
         }
 
         private void btnAddImages_Click(object sender, EventArgs e)
