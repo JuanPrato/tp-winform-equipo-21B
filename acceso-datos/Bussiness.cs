@@ -26,8 +26,8 @@ namespace acceso_datos
 
             SqlConnectionStringBuilder sConnB = new SqlConnectionStringBuilder()
             {
-                DataSource = ".\\SQLEXPRESS",
-                //DataSource = "localhost",
+                //DataSource = ".\\SQLEXPRESS",
+                DataSource = "localhost",
                 InitialCatalog = "CATALOGO_P3_DB",
                 IntegratedSecurity = true
             };
@@ -71,11 +71,6 @@ namespace acceso_datos
 
             string query = String.Format("DELETE FROM {0} {1}", tableName, condition);
             SqlDataReader reader = this.executeCommand(query);
-
-            if (!reader.Read())
-            {
-                throw new Exception();
-            }
             sqlConexion.Close();
         }
 

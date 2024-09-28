@@ -24,7 +24,7 @@ namespace GestorStock
             InitializeComponent();
         }
 
-        private void frmCategoriesEdit_Load(object sender, EventArgs e)
+        private void reloadBox()
         {
             CategoryBussiness categoryBussiness = new CategoryBussiness();
 
@@ -32,13 +32,23 @@ namespace GestorStock
 
             this.cbCategories.Items.AddRange(categorias.ToArray());
 
+            this.cbCategories.SelectedItem = null;
+            this.tbDescription.Text = "";
+
             this.tbDescription.Enabled = false;
             this.btnDelete.Enabled = false;
             this.btnSave.Enabled = false;
         }
 
+        private void frmCategoriesEdit_Load(object sender, EventArgs e)
+        {
+            this.reloadBox();
+        }
+
         private void cbCategories_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (this.cbCategories.SelectedItem == null) return;
+
             this.tbDescription.Enabled = true;
             this.btnSave.Enabled = true;
             this.btnDelete.Enabled = true;
@@ -83,34 +93,24 @@ namespace GestorStock
                 MessageBox.Show("Debe seleccionar una categoría");
                 return;
             }
-            else
+            CategoryBussiness catBus = new CategoryBussiness();
+            Categoria categoria = new Categoria();
+            categoria = this.cbCategories.SelectedItem as Categoria;
+
+            ItemBussiness itemBus = new ItemBussiness();
+            List<Articulo> articulos = itemBus.getAll();
+
+            if (articulos.Any(a => a.Categoria.Id == categoria.Id))
             {
-                CategoryBussiness catBus = new CategoryBussiness();
-                Categoria categoria = new Categoria();
-                categoria = this.cbCategories.SelectedItem as Categoria;
-
-                ItemBussiness itemBus = new ItemBussiness();
-                List<Articulo> articulos = itemBus.getAll();
-
-                if (articulos.Any(a => a.Categoria.Id == categoria.Id))
-                {
-                    MessageBox.Show("No se puede eliminar la categoría ya que hay artículos asociados.");
-                    return;
-
-                }
-                else
-                {
-                    DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la categoría " + categoria.Descripcion.ToString());
-                    if (res == DialogResult.OK)
-                    {
-                        catBus.deleteOne(categoria);
-                        MessageBox.Show("Categoría " + categoria.Descripcion.ToString() + " eliminada con éxito.");
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
+                MessageBox.Show("No se puede eliminar la categoría ya que hay artículos asociados.");
+                return;
+            }
+            DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la categoría " + categoria.Descripcion.ToString());
+            if (res == DialogResult.OK)
+            {
+                catBus.deleteOne(categoria);
+                MessageBox.Show("Categoría " + categoria.Descripcion.ToString() + " eliminada con éxito.");
+                this.reloadBox();
             }
         }
     }

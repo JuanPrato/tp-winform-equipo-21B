@@ -18,8 +18,7 @@ namespace GestorStock
         {
             InitializeComponent();
         }
-
-        private void frmBrandsEdit_Load(object sender, EventArgs e)
+        private void reloadBox()
         {
             try
             {
@@ -33,6 +32,8 @@ namespace GestorStock
                 }
                 else
                 {
+                    this.txtBrandsEdit.Text = "";
+
                     this.cmbBrandsEdit.Enabled = false;
                     this.txtBrandsEdit.Enabled = false;
                 }
@@ -41,6 +42,11 @@ namespace GestorStock
             {
                 MessageBox.Show("Ocurrió un error inesperado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void frmBrandsEdit_Load(object sender, EventArgs e)
+        {
+            this.reloadBox();
         }
 
         private void cmbBrandsEdit_SelectedIndexChanged(object sender, EventArgs e)
@@ -84,34 +90,24 @@ namespace GestorStock
                 MessageBox.Show("Debe seleccionar una marca");
                 return;
             }
-            else
+            BrandBussiness brandBus = new BrandBussiness();
+            Marca marca = new Marca();
+            marca = this.cmbBrandsEdit.SelectedItem as Marca;
+
+            ItemBussiness itemBus = new ItemBussiness();
+            List<Articulo> articulos = itemBus.getAll();
+
+            if (articulos.Any(a => a.Marca.Id == marca.Id))
             {
-                BrandBussiness brandBus = new BrandBussiness();
-                Marca marca = new Marca();
-                marca = this.cmbBrandsEdit.SelectedItem as Marca;
-
-                ItemBussiness itemBus = new ItemBussiness();
-                List<Articulo> articulos = itemBus.getAll();
-
-                if (articulos.Any(a => a.Marca.Id == marca.Id))
-                {
-                    MessageBox.Show("No se puede eliminar la marca ya que hay artículos asociados.");
-                    return;
-
-                }
-                else
-                {
-                    DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la marca " + marca.Descripcion.ToString());
-                    if (res == DialogResult.OK)
-                    {
-                        brandBus.deleteOne(marca);
-                        MessageBox.Show("Marca " + marca.Descripcion.ToString() + " eliminada con éxito.");
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
+                MessageBox.Show("No se puede eliminar la marca ya que hay artículos asociados.");
+                return;
+            }
+            DialogResult res = MessageBox.Show("¿Estás seguro de eliminar la marca " + marca.Descripcion.ToString());
+            if (res == DialogResult.OK)
+            {
+                brandBus.deleteOne(marca);
+                MessageBox.Show("Marca " + marca.Descripcion.ToString() + " eliminada con éxito.");
+                this.reloadBox();
             }
         }
     }
