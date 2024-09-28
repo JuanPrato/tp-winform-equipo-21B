@@ -74,23 +74,20 @@ namespace GestorStock
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if(this.dgvArticles.CurrentRow != null)
-            {
-                ItemBussiness itemBus = new ItemBussiness();
-                Articulo item = new Articulo();
-                item = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
-                DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString());
-                if (res == DialogResult.OK)
-                {
-                    itemBus.deleteOne(item);
-                    MessageBox.Show("Artículo " + item.Id.ToString() + " eliminado con éxito.");
-                } else
-                {
-                    return;
-                }
-            } else
+            if (this.dgvArticles.CurrentRow == null)
             {
                 MessageBox.Show("Debe seleccionar un artículo");
+                return;
+            }
+            ItemBussiness itemBus = new ItemBussiness();
+            Articulo item = new Articulo();
+            item = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
+            DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString());
+            if (res == DialogResult.OK)
+            {
+                itemBus.deleteOne(item);
+                MessageBox.Show("Artículo " + item.Id.ToString() + " eliminado con éxito.");
+                this.loadItems();
             }
         }
 
