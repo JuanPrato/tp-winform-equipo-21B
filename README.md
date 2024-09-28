@@ -1,5 +1,7 @@
 TP 2 PROGRAMACIÓN 3
 
-DIAGRAMA DE CLASES
+INTEGRANTES DEL GRUPO:
 
-![diagrama de clases](./DIAGRAMA_CLASES.png)
+Juan Manuel Prato
+Mauricio Villalba
+Joaquin Voda
