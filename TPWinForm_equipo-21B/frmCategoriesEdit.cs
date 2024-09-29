@@ -28,16 +28,22 @@ namespace GestorStock
         {
             CategoryBussiness categoryBussiness = new CategoryBussiness();
 
-            this.categorias = categoryBussiness.getAll();
+            this.cbCategories.DataSource = categoryBussiness.getAll();
 
-            this.cbCategories.Items.AddRange(categorias.ToArray());
+            if (this.cbCategories.DataSource != null)
+            {
+                this.cbCategories.DisplayMember = "Descripcion";
+                this.cbCategories.ValueMember = "Id";
+            }
+            else
+            {
+                this.tbDescription.Text = "";
 
-            this.cbCategories.SelectedItem = null;
-            this.tbDescription.Text = "";
-
-            this.tbDescription.Enabled = false;
-            this.btnDelete.Enabled = false;
-            this.btnSave.Enabled = false;
+                this.cbCategories.Enabled = false;
+                this.tbDescription.Enabled = false;
+                this.btnDelete.Enabled = false;
+                this.btnSave.Enabled = false;
+            }
         }
 
         private void frmCategoriesEdit_Load(object sender, EventArgs e)
