@@ -82,7 +82,7 @@ namespace GestorStock
             ItemBussiness itemBus = new ItemBussiness();
             Articulo item = new Articulo();
             item = this.dgvArticles.SelectedRows[0].DataBoundItem as Articulo;
-            DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString());
+            DialogResult res = MessageBox.Show("¿Estás seguro de eliminar el artículo " + item.Id.ToString() + "?", "Confirmation", MessageBoxButtons.OKCancel);
             if (res == DialogResult.OK)
             {
                 itemBus.deleteOne(item);
